@@ -2,13 +2,14 @@
 
 SaaS Website, Project Management And Dashboard With Stripe using Nextjs14, Bun, Stripe Connect, Prisma, MySQL, Tailwind
 
-< app screenshots will go here >
+![homepage_dev_screenshot](https://github.com/user-attachments/assets/fbc0c330-28b3-47c8-8de4-dbf03724b1e4)
 
 ## Features
 
-- Beautiful UI with [chadcn ui](https://ui.shadcn.com/)
+- Beautiful UI with [chadcn ui](https://ui.shadcn.com/) with almost [unlimited themes](https://gradient.page/tools/shadcn-ui-theme-generator)
 - Multivendor B2B2B Saas
 - Agency and Sub accounts
+- Multiple signin options: (google, apple, linkedIn, username & phone)
 - 🌐 Unlimited funnel hosting
 - 🚀 Full Website & Funnel builder
 - 💻 Role-based Access
@@ -16,7 +17,7 @@ SaaS Website, Project Management And Dashboard With Stripe using Nextjs14, Bun, 
 - 🛒Stripe add-on products
 - 🔐 Connect Stripe accounts for all users! - Stripe Connect
 - 💳 Charge application fee per sale and recurring sales
-- 💰 Custom Dashboards
+- 💰 Custom Dashboards/tenant
 - 📊 Media Storage
 - 📈 Stripe Product Sync
 - 📌Custom checkouts on funnels
