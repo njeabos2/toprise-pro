@@ -1,35 +1,29 @@
 # ✨ [toprise.pro](https://toprise.pro)
 
-SaaS Website, Project Management And Dashboard With Stripe using Nextjs14, Bun, Stripe Connect, Prisma, MySQL, Tailwind
+Multi-tenant full stack website with Project Management and Dashboards.
 
 ![homepage_dev_screenshot](https://github.com/user-attachments/assets/fbc0c330-28b3-47c8-8de4-dbf03724b1e4)
 
 ## Features
 
-- Beautiful UI with [chadcn ui](https://ui.shadcn.com/) with almost [unlimited themes](https://gradient.page/tools/shadcn-ui-theme-generator)
-- Multivendor B2B2B Saas
-- Agency and Sub accounts
-- Multiple signin options: (google, apple, linkedIn, username & phone)
-- 🌐 Unlimited funnel hosting
-- 🚀 Full Website & Funnel builder
-- 💻 Role-based Access
-- 🔄 Stripe Subscription plans
-- 🛒Stripe add-on products
-- 🔐 Connect Stripe accounts for all users! - Stripe Connect
-- 💳 Charge application fee per sale and recurring sales
-- 💰 Custom Dashboards/tenant
-- 📊 Media Storage
-- 📈 Stripe Product Sync
-- 📌Custom checkouts on funnels
-- 📢 Get leads from funnels
-- 🎨 Khanban board
-- 📂 Project management system
-- 🔗 Notifications
-- 📆 Funnel performance metrics
-- 🧾 Agency and subacc metrics
-- 🌙 Graphs and charts
-- ☀️ Light & Dark mode
-- 📄 Functioning landing page
+```text
+┌ ○ Tech stack: ▲ Next.js 14.2.5, Bun, Prisma, MySQL & Tailwind css.
+├ ƒ 📊 Multivendor B2B2B SaaS (Agencies and Sub accounts)
+├ ƒ 🌐 virtually unlimited subdomains (using midleware.ts)
+├ ƒ 🔐 Multiple signin options: (google, apple, linkedIn, username & phone)
+├ ƒ 🚀 Full Website & Funnel builder
+├ ƒ 💻 Role-based Access
+├ ƒ 🔄 Stripe Subscription plans
+├ ƒ 🔐 Connect Stripe accounts for all users! - Stripe Connect
+├ ƒ 💳 Charge application fee per sale and recurring sales
+├ ƒ 💰 Custom Dashboards per account
+├ ƒ 📂 Media Storage
+├ ƒ 📌 Custom checkouts
+├ ƒ 🎨 Khanban board
+├ ƒ 🔗 Event notifications
+├ ƒ 📆 Performance metrics
+└ ƒ 📄 Functioning landing page with https://ui.shadcn.com and theme by https://gradient.page/tools/shadcn-ui-theme-generator
+```
 
 ## Website with background grids
 
@@ -46,13 +40,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 Start development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
 bun dev
+```
+
+postInstall
+
+```bash
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -61,8 +54,8 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Deployed on Vercel
+## [Deployed on Vercel](https://toprise.vercel.app/)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy Next.js apps is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
