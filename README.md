@@ -2,7 +2,7 @@
 
 Multi-tenant full stack website with Project Management and Dashboards.
 
-![homepage_dev_screenshot](https://github.com/user-attachments/assets/fbc0c330-28b3-47c8-8de4-dbf03724b1e4)
+![homepage_dev_screenshot](https://github.com/user-attachments/assets/c8de41d6-d982-49a8-b2ce-b859917b721a)
 
 ## Features
 
