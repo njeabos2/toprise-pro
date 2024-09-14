@@ -5,8 +5,9 @@
   "scripts": {
     "build": "NODE_ENV=production next build",
     "start": "NODE_ENV=production next start",
-    "migrate-prod": "npx prisma migrate deploy && npx tsx lib/seedTriggers.ts",
+    "migrate-prod": "npx prisma generate && npx prisma migrate deploy && npx tsx lib/seedTriggers.ts",
     "migrate-dev": "npx prisma migrate dev && npx tsx lib/seedTriggers.ts",
+    "postinstall": "prisma generate",
     "dev": "NODE_ENV=development next dev",
     "lint": "next lint"
   },
