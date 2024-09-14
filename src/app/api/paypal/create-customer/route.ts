@@ -1,6 +1,7 @@
-import { stripe } from "@/lib/stripe";
+// import { stripe } from '@/lib/stripe';
 import { PaypalCustomerType } from "@/lib/types";
 import { NextResponse } from "next/server";
+import { v4 } from "uuid";
 
 export async function POST(req: Request) {
   const { address, email, name, shipping }: PaypalCustomerType = await req
@@ -12,12 +13,15 @@ export async function POST(req: Request) {
     });
   }
   try {
-    const customer = await stripe.customers.create({
-      email,
-      name,
-      address,
-      shipping,
-    });
+    const customer = {
+      id: v4(),
+    };
+    // const customer = await stripe.customers.create({
+    //   email,
+    //   name,
+    //   address,
+    //   shipping,
+    // });
     return Response.json({ customerId: customer.id });
   } catch (error) {
     console.log("🔴 Error", error);

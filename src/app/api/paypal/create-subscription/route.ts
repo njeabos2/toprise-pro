@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { stripe } from "@/lib/stripe";
+// import { stripe } from "@/lib/stripe";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -27,43 +27,45 @@ export async function POST(req: Request) {
         );
       }
       console.log("Updating the subscription");
-      const currentSubscriptionDetails = await stripe.subscriptions.retrieve(
-        subscriptionExists.Subscription.subscritiptionId,
-      );
+      // const currentSubscriptionDetails = await stripe.subscriptions.retrieve(
+      //   subscriptionExists.Subscription.subscritiptionId,
+      // );
 
-      const subscription = await stripe.subscriptions.update(
-        subscriptionExists.Subscription.subscritiptionId,
-        {
-          items: [
-            {
-              id: currentSubscriptionDetails.items.data[0].id,
-              deleted: true,
-            },
-            { price: priceId },
-          ],
-          expand: ["latest_invoice.payment_intent"],
-        },
-      );
+      // const subscription = await stripe.subscriptions.update(
+      //   subscriptionExists.Subscription.subscritiptionId,
+      //   {
+      //     items: [
+      //       {
+      //         id: currentSubscriptionDetails.items.data[0].id,
+      //         deleted: true,
+      //       },
+      //       { price: priceId },
+      //     ],
+      //     expand: ["latest_invoice.payment_intent"],
+      //   },
+      // );
       return NextResponse.json({
-        subscriptionId: subscription.id,
+        subscriptionId: "subscription.id",
+        // subscriptionId: subscription.id,
         //@ts-ignore
         clientSecret: subscription.latest_invoice.payment_intent.client_secret,
       });
     } else {
       console.log("Createing a sub");
-      const subscription = await stripe.subscriptions.create({
-        customer: customerId,
-        items: [
-          {
-            price: priceId,
-          },
-        ],
-        payment_behavior: "default_incomplete",
-        payment_settings: { save_default_payment_method: "on_subscription" },
-        expand: ["latest_invoice.payment_intent"],
-      });
+      // const subscription = await stripe.subscriptions.create({
+      //   customer: customerId,
+      //   items: [
+      //     {
+      //       price: priceId,
+      //     },
+      //   ],
+      //   payment_behavior: "default_incomplete",
+      //   payment_settings: { save_default_payment_method: "on_subscription" },
+      //   expand: ["latest_invoice.payment_intent"],
+      // });
       return NextResponse.json({
-        subscriptionId: subscription.id,
+        subscriptionId: "subscription.id",
+        // subscriptionId: subscription.id,
         //@ts-ignore
         clientSecret: subscription.latest_invoice.payment_intent.client_secret,
       });

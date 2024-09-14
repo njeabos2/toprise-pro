@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { stripe } from "@/lib/stripe";
+// import { stripe } from '@/lib/stripe';
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -42,39 +42,40 @@ export async function POST(req: Request) {
   // }
 
   try {
-    const session = await stripe.checkout.sessions.create(
-      {
-        line_items: prices.map((price) => ({
-          price: price.productId,
-          quantity: 1,
-        })),
+    // const session = await stripe.checkout.sessions.create(
+    //   {
+    //     line_items: prices.map((price) => ({
+    //       price: price.productId,
+    //       quantity: 1,
+    //     })),
 
-        ...(subscriptionPriceExists && {
-          subscription_data: {
-            metadata: { connectAccountSubscriptions: "true" },
-            application_fee_percent: +process.env
-              .NEXT_PUBLIC_PLATFORM_SUBSCRIPTION_PERCENT,
-          },
-        }),
+    //     ...(subscriptionPriceExists && {
+    //       subscription_data: {
+    //         metadata: { connectAccountSubscriptions: "true" },
+    //         application_fee_percent: +process.env
+    //           .NEXT_PUBLIC_PLATFORM_SUBSCRIPTION_PERCENT,
+    //       },
+    //     }),
 
-        ...(!subscriptionPriceExists && {
-          payment_intent_data: {
-            metadata: { connectAccountPayments: "true" },
-            application_fee_amount:
-              +process.env.NEXT_PUBLIC_PLATFORM_ONETIME_FEE * 100,
-          },
-        }),
+    //     ...(!subscriptionPriceExists && {
+    //       payment_intent_data: {
+    //         metadata: { connectAccountPayments: "true" },
+    //         application_fee_amount:
+    //           +process.env.NEXT_PUBLIC_PLATFORM_ONETIME_FEE * 100,
+    //       },
+    //     }),
 
-        mode: subscriptionPriceExists ? "subscription" : "payment",
-        ui_mode: "embedded",
-        redirect_on_completion: "never",
-      },
-      { stripeAccount: subAccountConnectAccId },
-    );
+    //     mode: subscriptionPriceExists ? "subscription" : "payment",
+    //     ui_mode: "embedded",
+    //     redirect_on_completion: "never",
+    //   },
+    //   { stripeAccount: subAccountConnectAccId },
+    // );
 
     return NextResponse.json(
       {
-        clientSecret: session.client_secret,
+        clientSecret: "session.client_secret",
+        // clientSecret: session.client_secret,
       },
       {
         headers: {

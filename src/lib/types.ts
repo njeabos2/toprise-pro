@@ -20,8 +20,6 @@ import {
 import { db } from "./db";
 import { z } from "zod";
 
-import Paypal from "stripe/rest-sdk";
-
 export type NotificationWithUser =
   | ({
     User: {
@@ -142,7 +140,19 @@ export type PaypalCustomerType = {
   address: Address;
 };
 
-export type PricesList = Paypal.ApiList<Paypal.Price>;
+// export type PricesList = Paypal.ApiList<Paypal.Price>;
+export type PricesList = {
+  data: {
+    plans: {
+      plans: [{
+        id: string;
+        prices: {
+          value: string;
+        };
+      }];
+    };
+  };
+};
 
 export type FunnelsForSubAccount = Prisma.PromiseReturnType<
   typeof getFunnels

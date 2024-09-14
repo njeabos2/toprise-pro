@@ -81,7 +81,7 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
   return (
     <div className="border-none transition-all">
       <div className="flex flex-col gap-4">
-        {data.plans?.plans.map((price: { id: string; unit_amount: number | null; nickname: string }) => (
+        {/* {data.plans?.plans.map((price: { id: string; unit_amount: number | null; nickname: string }) => (
           <Card
             onClick={() => setSelectedPriceId(price.id as Plan)}
             key={price.id}
@@ -107,7 +107,7 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
               <div className="w-2 h-2 bg-emerald-500 rounded-full absolute top-4 right-4" />
             )}
           </Card>
-        ))}
+        ))} */}
 
         {options.clientSecret && !planExists && (
           <>

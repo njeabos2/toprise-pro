@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import Paypal from 'stripe'
+// import Paypal from 'stripe'
 import Image from 'next/image'
 import {
   saveActivityLogsNotification,
@@ -21,7 +21,8 @@ import { Button } from '@/components/ui/button'
 
 interface FunnelProductsTableProps {
   defaultData: Funnel
-  products: Paypal.Product[]
+  products: []
+  // products: Paypal.Product[]
 }
 
 const FunnelProductsTable: React.FC<FunnelProductsTableProps> = ({
@@ -49,31 +50,32 @@ const FunnelProductsTable: React.FC<FunnelProductsTableProps> = ({
     router.refresh()
   }
 
-  const handleAddProduct = async (product: Paypal.Product) => {
-    const productIdExists = liveProducts.find(
-      //@ts-ignore
-      (prod) => prod.productId === product.default_price.id
-    )
-    productIdExists
-      ? setLiveProducts(
-        liveProducts.filter(
-          (prod) =>
-            prod.productId !==
-            //@ts-ignore
-            product.default_price?.id
-        )
-      )
-      : //@ts-ignore
-      setLiveProducts([
-        ...liveProducts,
-        {
-          //@ts-ignore
-          productId: product.default_price.id as string,
-          //@ts-ignore
-          recurring: !!product.default_price.recurring,
-        },
-      ])
-  }
+  const handleAddProduct = async () => { }
+  // const handleAddProduct = async (product: Paypal.Product) => {
+  //   const productIdExists = liveProducts.find(
+  //     //@ts-ignore
+  //     (prod) => prod.productId === product.default_price.id
+  //   )
+  //   productIdExists
+  //     ? setLiveProducts(
+  //       liveProducts.filter(
+  //         (prod) =>
+  //           prod.productId !==
+  //           //@ts-ignore
+  //           product.default_price?.id
+  //       )
+  //     )
+  //     : //@ts-ignore
+  //     setLiveProducts([
+  //       ...liveProducts,
+  //       {
+  //         //@ts-ignore
+  //         productId: product.default_price.id as string,
+  //         //@ts-ignore
+  //         recurring: !!product.default_price.recurring,
+  //       },
+  //     ])
+  // }
   return (
     <>
       <Table className="bg-card border-[1px] border-border rounded-md">
@@ -87,7 +89,7 @@ const FunnelProductsTable: React.FC<FunnelProductsTableProps> = ({
           </TableRow>
         </TableHeader>
         <TableBody className="font-medium truncate">
-          {products.map((product) => (
+          {/* {products.map((product) => (
             <TableRow key={product.id}>
               <TableCell>
                 <Input
@@ -126,6 +128,44 @@ const FunnelProductsTable: React.FC<FunnelProductsTableProps> = ({
               </TableCell>
             </TableRow>
           ))}
+          */}
+          <TableRow key={'product.id'}>
+            <TableCell>
+              <Input
+                defaultChecked={
+                  !!liveProducts.find(
+                    //@ts-ignore
+                    (prod) => prod.productId === product.default_price.id
+                  )
+                }
+                onChange={() => handleAddProduct()}
+                type="checkbox"
+                className="w-4 h-4"
+              />
+            </TableCell>
+            <TableCell>
+              <Image
+                alt="product Image"
+                height={60}
+                width={60}
+                src={'product.images[0]'}
+              />
+            </TableCell>
+            <TableCell>{'product.name'}</TableCell>
+            <TableCell>
+              {
+                //@ts-ignore
+                product.default_price?.recurring ? 'Recurring' : 'One Time'
+              }
+            </TableCell>
+            <TableCell className="text-right">
+              $
+              {
+                //@ts-ignore
+                product.default_price?.unit_amount / 100
+              }
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
       <Button

@@ -20,7 +20,7 @@ type Props = {
 }
 
 const page = async ({ params }: Props) => {
-  //CHALLENGE : Create the add on  products
+  // TODO : Create add on  products
   // const addOns = await stripe.products.list({
   //   ids: addOnProducts.map((product) => product.id),
   //   expand: ['data.default_price'],
@@ -65,16 +65,17 @@ const page = async ({ params }: Props) => {
 
   return (
     <>
-      <SubscriptionHelper
+      {/* <SubscriptionHelper
         prices={'prices.data'}
+        // prices = {new Object()}
         customerId={agencySubscription?.customerId || ''}
         planExists={agencySubscription?.Subscription?.active === true}
-      />
+      /> */}
       <h1 className="text-4xl p-4">Billing</h1>
       <Separator className=" mb-6" />
       <h2 className="text-2xl p-4">Current Plan</h2>
       <div className="flex flex-col lg:!flex-row justify-between gap-8">
-        <PricingCard
+        {/* <PricingCard
           planExists={agencySubscription?.Subscription?.active === true}
           prices={'prices.data'}
           customerId={agencySubscription?.customerId || ''}
@@ -110,21 +111,8 @@ const page = async ({ params }: Props) => {
               ? currentPlanDetails?.title || 'Starter'
               : 'Starter'
           }
-        />
-        <PricingCard
-            planExists={agencySubscription?.Subscription?.active === true}
-            prices={'prices.data'}
-            customerId={agencySubscription?.customerId || ''}
-            key={'addOn.id'}
-            amt={'$0'}
-            buttonCta="Subscribe"
-            description="Dedicated support line & teams channel for support"
-            duration="/ month"
-            features={[]}
-            title={'24/7 priority support'}
-            highlightTitle="Get support now!"
-            highlightDescription="Get priority support and skip the long long with the click of a button."
-          />
+        /> */}
+        <div>{'Pricing cards go here'}</div>
         {/* {addOns.data.map((addOn) => (
           <PricingCard
             planExists={agencySubscription?.Subscription?.active === true}
@@ -161,22 +149,22 @@ const page = async ({ params }: Props) => {
         </TableHeader>
         <TableBody className="font-medium truncate">
           <TableRow key={'charge.id'}>
-              <TableCell>{'desc_goes_here'}</TableCell>
-              <TableCell className="text-muted-foreground">
-                {'id_goes_here'}
-              </TableCell>
-              <TableCell>{'date_goes_here'}</TableCell>
-              <TableCell>
-                <p
-                  className={clsx('', {
-                    'text-emerald-500': 'paid',
-                    'text-orange-600':'pending',
-                    'text-red-600': 'failed',
-                  })}
-                >
-                  {'charge.status.toUpperCase()_goes_here'}
-                </p>
-              </TableCell>
+            <TableCell>{'desc_goes_here'}</TableCell>
+            <TableCell className="text-muted-foreground">
+              {'id_goes_here'}
+            </TableCell>
+            <TableCell>{'date_goes_here'}</TableCell>
+            <TableCell>
+              <p
+                className={clsx('', {
+                  'text-emerald-500': 'paid',
+                  'text-orange-600': 'pending',
+                  'text-red-600': 'failed',
+                })}
+              >
+                {'charge.status.toUpperCase()_goes_here'}
+              </p>
+            </TableCell>
             <TableCell className="text-right">{'charge.amount'}</TableCell>
           </TableRow>
           {/* {allCharges.map((charge) => (
