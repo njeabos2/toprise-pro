@@ -13,8 +13,8 @@ Multi-tenant full stack website with Project Management and Dashboards.
 ├ ƒ 🔐 Multiple signin options: (google, apple, linkedIn, username & phone)
 ├ ƒ 🚀 Full Website & Funnel builder
 ├ ƒ 💻 Role-based Access
-├ ƒ 🔄 Stripe Subscription plans
-├ ƒ 🔐 Connect Stripe accounts for all users! - Stripe Connect
+├ ƒ 🔄 Subscription plans
+├ ƒ 🔐 Connect payment accounts for all users!
 ├ ƒ 💳 Charge application fee per sale and recurring sales
 ├ ƒ 💰 Custom Dashboards per account
 ├ ƒ 📂 Media Storage
@@ -22,40 +22,62 @@ Multi-tenant full stack website with Project Management and Dashboards.
 ├ ƒ 🎨 Khanban board
 ├ ƒ 🔗 Event notifications
 ├ ƒ 📆 Performance metrics
-└ ƒ 📄 Functioning landing page with https://ui.shadcn.com and theme by https://gradient.page/tools/shadcn-ui-theme-generator
+└ ƒ 📄 Functioning landing page usinng https://ui.shadcn.com
 ```
 
-## Website with background grids
+This is a [Next.js](https://nextjs.org/) project bootstrapped with
+[`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-[ibelick](https://bg.ibelick.com/)
+## Setup wiki
 
-## Shadcn UI Theme creator
+For future reference:
 
-[Link To Website](https://gradient.page/tools/shadcn-ui-theme-generator)
+### Theme
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+[🔗 Website background grids from ibelick](https://bg.ibelick.com/)
 
-## Development (will be in github wiki)
+[🔗 Shadcn UI Theme creator](https://gradient.page/tools/shadcn-ui-theme-generator)
+
+[Database migration](https://supabase.com/dashboard/project/dcsglrjetbzwyyhierki/database/migrations)
+
+> Link your project
+
+```bash
+supabase link --project-ref dcsglrjetbzwyyhierki
+```
+
+> Create a new migration called "new-migration"
+
+```bash
+supabase migration new init
+```
+
+> Run all migrations against this project
+
+```bash
+supabase db push
+```
 
 Start development server:
 
 ```bash
-bun dev
+bun run dev
 ```
 
-postInstall
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the
+result.
 
-```bash
-```
+You can start editing the page by modifying `app/page.tsx`. The page
+auto-updates as you edit the file.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This project uses
+[`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to
+automatically optimize and load Inter, a custom Google Font.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### [🔗 vercel.app](https://toprise.vercel.app/)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The easiest way to deploy Next.js apps is to use the
+[Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
 
-## [Deployed on Vercel](https://toprise.vercel.app/)
-
-The easiest way to deploy Next.js apps is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
-
-[Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[Next.js deployment documentation](https://nextjs.org/docs/deployment) for more
+details.

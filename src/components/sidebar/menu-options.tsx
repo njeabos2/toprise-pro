@@ -239,7 +239,7 @@ const MenuOptions = ({
                       onClick={() => {
                         setOpen(
                           <CustomModal
-                            title="Create A Subaccount"
+                            title="Create a sub account"
                             subheading="You can switch between your agency account and the subaccount from the sidebar"
                           >
                             <SubAccountDetails

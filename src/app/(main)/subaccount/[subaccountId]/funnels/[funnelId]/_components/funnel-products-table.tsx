@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import Stripe from 'stripe'
+import Paypal from 'stripe'
 import Image from 'next/image'
 import {
   saveActivityLogsNotification,
@@ -21,7 +21,7 @@ import { Button } from '@/components/ui/button'
 
 interface FunnelProductsTableProps {
   defaultData: Funnel
-  products: Stripe.Product[]
+  products: Paypal.Product[]
 }
 
 const FunnelProductsTable: React.FC<FunnelProductsTableProps> = ({
@@ -49,30 +49,30 @@ const FunnelProductsTable: React.FC<FunnelProductsTableProps> = ({
     router.refresh()
   }
 
-  const handleAddProduct = async (product: Stripe.Product) => {
+  const handleAddProduct = async (product: Paypal.Product) => {
     const productIdExists = liveProducts.find(
       //@ts-ignore
       (prod) => prod.productId === product.default_price.id
     )
     productIdExists
       ? setLiveProducts(
-          liveProducts.filter(
-            (prod) =>
-              prod.productId !==
-              //@ts-ignore
-              product.default_price?.id
-          )
+        liveProducts.filter(
+          (prod) =>
+            prod.productId !==
+            //@ts-ignore
+            product.default_price?.id
         )
+      )
       : //@ts-ignore
-        setLiveProducts([
-          ...liveProducts,
-          {
-            //@ts-ignore
-            productId: product.default_price.id as string,
-            //@ts-ignore
-            recurring: !!product.default_price.recurring,
-          },
-        ])
+      setLiveProducts([
+        ...liveProducts,
+        {
+          //@ts-ignore
+          productId: product.default_price.id as string,
+          //@ts-ignore
+          recurring: !!product.default_price.recurring,
+        },
+      ])
   }
   return (
     <>

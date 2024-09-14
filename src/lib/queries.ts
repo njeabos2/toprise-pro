@@ -1,6 +1,6 @@
 'use server' // ie: server action file.
 
-import { clerkClient, currentUser } from '@clerk/nextjs'
+import { clerkClient, currentUser } from '@clerk/nextjs/server'
 import { db } from './db'
 import { redirect } from 'next/navigation'
 import {
@@ -189,6 +189,9 @@ export const verifyAndAcceptInvitation = async () => {
         email: user.emailAddresses[0].emailAddress,
       },
     })
+    if (agency) {
+      console.log('agency : ', agency)
+    }
     return agency ? agency.agencyId : null
   }
 }

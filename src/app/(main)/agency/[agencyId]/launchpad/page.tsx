@@ -7,12 +7,12 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { db } from '@/lib/db'
-import { getStripeOAuthLink } from '@/lib/utils'
+import { getPaypalOAuthLink } from '@/lib/utils'
 import { CheckCircleIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { stripe } from '@/lib/stripe'
+// import { stripe } from '@/lib/stripe'
 
 type Props = {
   params: {
@@ -40,25 +40,26 @@ const LaunchPadPage = async ({ params, searchParams }: Props) => {
     agencyDetails.state &&
     agencyDetails.zipCode
 
-  const stripeOAuthLink = getStripeOAuthLink(
+  const stripeOAuthLink = getPaypalOAuthLink(
     'agency',
     `launchpad___${agencyDetails.id}`
   )
 
-  let connectedStripeAccount = false
+  let connectedPaypalAccount = false
 
   if (searchParams.code) {
     if (!agencyDetails.connectAccountId) {
       try {
-        const response = await stripe.oauth.token({
-          grant_type: 'authorization_code',
-          code: searchParams.code,
-        })
-        await db.agency.update({
-          where: { id: params.agencyId },
-          data: { connectAccountId: response.stripe_user_id },
-        })
-        connectedStripeAccount = true
+        const response = null
+        // await stripe.oauth.token({
+        //   grant_type: 'authorization_code',
+        //   code: searchParams.code,
+        // })
+        // await db.agency.update({
+        //   where: { id: params.agencyId },
+        //   data: { connectAccountId: response.stripe_user_id },
+        // })
+        // connectedPaypalAccount = true
       } catch (error) {
         console.log('🔴 Could not connect stripe account')
       }
@@ -85,25 +86,25 @@ const LaunchPadPage = async ({ params, searchParams }: Props) => {
                   width={80}
                   className="rounded-md object-contain"
                 />
-                <p> Save the website as a shortcut on your mobile device</p>
+                <p> Save this website as a shortcut on your mobile device</p>
               </div>
               <Button>Start</Button>
             </div>
             <div className="flex justify-between items-center w-full border p-4 rounded-lg gap-2">
               <div className="flex md:items-center gap-4 flex-col md:!flex-row">
                 <Image
-                  src="/stripelogo.png"
+                  src="/mtnlogo.png"
                   alt="app logo"
                   height={80}
                   width={80}
                   className="rounded-md object-contain"
                 />
                 <p>
-                  Connect your stripe account to accept payments and see your
+                  Connect your MTN account to accept payments and see your
                   dashboard.
                 </p>
               </div>
-              {agencyDetails.connectAccountId || connectedStripeAccount ? (
+              {agencyDetails.connectAccountId || connectedPaypalAccount ? (
                 <CheckCircleIcon
                   size={50}
                   className=" text-primary p-2 flex-shrink-0"

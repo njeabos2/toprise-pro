@@ -1,6 +1,6 @@
 import AgencyDetails from '@/components/forms/agency-details'
 import { getAuthUserDetails, verifyAndAcceptInvitation } from '@/lib/queries'
-import { currentUser } from '@clerk/nextjs'
+import { currentUser } from '@clerk/nextjs/server'
 import { Plan } from '@prisma/client'
 import { redirect } from 'next/navigation'
 import React from 'react'
@@ -11,7 +11,7 @@ const Page = async ({
   searchParams: { plan: Plan; state: string; code: string }
 }) => {
   const agencyId = await verifyAndAcceptInvitation()
-  console.log(agencyId)
+  console.log('agencyId : ', agencyId)
 
   //get the users details
   const user = await getAuthUserDetails()

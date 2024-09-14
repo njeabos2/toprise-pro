@@ -121,17 +121,20 @@ const AgencyDetails = ({ data }: Props) => {
             state: values.zipCode,
           },
         }
-
-        const customerResponse = await fetch('/api/stripe/create-customer', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(bodyData),
-        })
-        const customerData: { customerId: string } =
-          await customerResponse.json()
-        custId = customerData.customerId
+        const randCustomerResponse = {
+          customerId: v4(),
+        }
+        // Todo : replace with real customer from payment provider
+        // const customerResponse = await fetch('/api/stripe/create-customer', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify(bodyData),
+        // })
+        // const customerData: { customerId: string } = await customerResponse.json()
+        const customerData: { customerId: string } = randCustomerResponse
+        custId = customerData.customerId // random guid (for now)
       }
 
       newUserData = await initUser({ role: 'AGENCY_OWNER' })
@@ -163,7 +166,7 @@ const AgencyDetails = ({ data }: Props) => {
         return router.refresh()
       }
     } catch (error) {
-      console.log(error)
+      console.log('could not create your agency', error)
       toast({
         variant: 'destructive',
         title: 'Oppse!',
@@ -183,7 +186,7 @@ const AgencyDetails = ({ data }: Props) => {
       })
       router.refresh()
     } catch (error) {
-      console.log(error)
+      console.log('could not delete your agency ', error)
       toast({
         variant: 'destructive',
         title: 'Oppse!',

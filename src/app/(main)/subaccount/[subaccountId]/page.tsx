@@ -21,7 +21,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { db } from '@/lib/db'
-import { stripe } from '@/lib/stripe'
+// import { stripe } from '@/lib/stripe'
 import { AreaChart, BadgeDelta } from '@tremor/react'
 import { ClipboardIcon, Contact2, DollarSign, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
@@ -55,54 +55,54 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
 
   if (!subaccountDetails) return
 
-  if (subaccountDetails.connectAccountId) {
-    const response = await stripe.accounts.retrieve({
-      stripeAccount: subaccountDetails.connectAccountId,
-    })
-    currency = response.default_currency?.toUpperCase() || 'USD'
-    const checkoutSessions = await stripe.checkout.sessions.list(
-      { created: { gte: startDate, lte: endDate }, limit: 100 },
-      {
-        stripeAccount: subaccountDetails.connectAccountId,
-      }
-    )
-    sessions = checkoutSessions.data.map((session) => ({
-      ...session,
-      created: new Date(session.created).toLocaleDateString(),
-      amount_total: session.amount_total ? session.amount_total / 100 : 0,
-    }))
+  // if (subaccountDetails.connectAccountId) {
+  //   const response = await stripe.accounts.retrieve({
+  //     stripeAccount: subaccountDetails.connectAccountId,
+  //   })
+  //   currency = response.default_currency?.toUpperCase() || 'USD'
+  //   const checkoutSessions = await stripe.checkout.sessions.list(
+  //     { created: { gte: startDate, lte: endDate }, limit: 100 },
+  //     {
+  //       stripeAccount: subaccountDetails.connectAccountId,
+  //     }
+  //   )
+  //   sessions = checkoutSessions.data.map((session) => ({
+  //     ...session,
+  //     created: new Date(session.created).toLocaleDateString(),
+  //     amount_total: session.amount_total ? session.amount_total / 100 : 0,
+  //   }))
 
-    totalClosedSessions = checkoutSessions.data
-      .filter((session) => session.status === 'complete')
-      .map((session) => ({
-        ...session,
-        created: new Date(session.created).toLocaleDateString(),
-        amount_total: session.amount_total ? session.amount_total / 100 : 0,
-      }))
+  //   totalClosedSessions = checkoutSessions.data
+  //     .filter((session) => session.status === 'complete')
+  //     .map((session) => ({
+  //       ...session,
+  //       created: new Date(session.created).toLocaleDateString(),
+  //       amount_total: session.amount_total ? session.amount_total / 100 : 0,
+  //     }))
 
-    totalPendingSessions = checkoutSessions.data
-      .filter(
-        (session) => session.status === 'open' || session.status === 'expired'
-      )
-      .map((session) => ({
-        ...session,
-        created: new Date(session.created).toLocaleDateString(),
-        amount_total: session.amount_total ? session.amount_total / 100 : 0,
-      }))
+  //   totalPendingSessions = checkoutSessions.data
+  //     .filter(
+  //       (session) => session.status === 'open' || session.status === 'expired'
+  //     )
+  //     .map((session) => ({
+  //       ...session,
+  //       created: new Date(session.created).toLocaleDateString(),
+  //       amount_total: session.amount_total ? session.amount_total / 100 : 0,
+  //     }))
 
-    net = +totalClosedSessions
-      .reduce((total, session) => total + (session.amount_total || 0), 0)
-      .toFixed(2)
+  //   net = +totalClosedSessions
+  //     .reduce((total, session) => total + (session.amount_total || 0), 0)
+  //     .toFixed(2)
 
-    potentialIncome = +totalPendingSessions
-      .reduce((total, session) => total + (session.amount_total || 0), 0)
-      .toFixed(2)
+  //   potentialIncome = +totalPendingSessions
+  //     .reduce((total, session) => total + (session.amount_total || 0), 0)
+  //     .toFixed(2)
 
-    closingRate = +(
-      (totalClosedSessions.length / checkoutSessions.data.length) *
-      100
-    ).toFixed(2)
-  }
+  //   closingRate = +(
+  //     (totalClosedSessions.length / checkoutSessions.data.length) *
+  //     100
+  //   ).toFixed(2)
+  // }
 
   const funnels = await db.funnel.findMany({
     where: {
@@ -128,7 +128,7 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
           <div className="absolute -top-10 -left-10 right-0 bottom-0 z-30 flex items-center justify-center backdrop-blur-md bg-background/50">
             <Card>
               <CardHeader>
-                <CardTitle>Connect Your Stripe</CardTitle>
+                <CardTitle>Connect Your Paypal</CardTitle>
                 <CardDescription>
                   You need to connect your stripe account to see metrics
                 </CardDescription>
@@ -191,7 +191,7 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
                           Total Carts Opened
                           <div className="flex gap-2">
                             <ShoppingCart className="text-rose-700" />
-                            {sessions.length}
+                            {'sessions.length'}
                           </div>
                         </div>
                       )}
@@ -200,7 +200,7 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
                           Won Carts
                           <div className="flex gap-2">
                             <ShoppingCart className="text-emerald-700" />
-                            {totalClosedSessions.length}
+                            {'totalClosedSessions.length'}
                           </div>
                         </div>
                       )}
@@ -264,30 +264,53 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
                     </TableRow>
                   </TableHeader>
                   <TableBody className="font-medium truncate">
-                    {totalClosedSessions
-                      ? totalClosedSessions.map((session) => (
-                          <TableRow key={session.id}>
-                            <TableCell>
-                              {session.customer_details?.email || '-'}
-                            </TableCell>
-                            <TableCell>
-                              <Badge className="bg-emerald-500 dark:text-black">
-                                Paid
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              {new Date(session.created).toUTCString()}
-                            </TableCell>
+                  <TableRow key={'session.id'}>
+                          <TableCell>
+                            {'session.customer_details'}
+                          </TableCell>
+                          <TableCell>
+                            <Badge className="bg-emerald-500 dark:text-black">
+                              Paid
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            {new Date().toUTCString()}
+                          </TableCell>
 
-                            <TableCell className="text-right">
-                              <small>{currency}</small>{' '}
-                              <span className="text-emerald-500">
-                                {session.amount_total}
-                              </span>
-                            </TableCell>
-                          </TableRow>
-                        ))
+                          <TableCell className="text-right">
+                            <small>{currency}</small>{' '}
+                            <span className="text-emerald-500">
+                              {'session.amount_total'}
+                            </span>
+                          </TableCell>
+                        </TableRow>
+
+                    {/* TODO:
+                      {totalClosedSessions ? totalClosedSessions.map((session) => (
+                        <TableRow key={session.id}>
+                          <TableCell>
+                            {session.customer_details?.email || '-'}
+                          </TableCell>
+                          <TableCell>
+                            <Badge className="bg-emerald-500 dark:text-black">
+                              Paid
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            {new Date(session.created).toUTCString()}
+                          </TableCell>
+
+                          <TableCell className="text-right">
+                            <small>{currency}</small>{' '}
+                            <span className="text-emerald-500">
+                              {session.amount_total}
+                            </span>
+                          </TableCell>
+                        </TableRow>
+                      ))
                       : 'No Data'}
+                      */
+                    }
                   </TableBody>
                 </Table>
               </CardHeader>

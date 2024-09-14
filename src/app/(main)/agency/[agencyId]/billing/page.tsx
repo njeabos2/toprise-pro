@@ -1,5 +1,5 @@
 import React from 'react'
-import { stripe } from '@/lib/stripe'
+// import { stripe } from '@/lib/stripe'
 import { addOnProducts, pricingCards } from '@/lib/constants'
 import { db } from '@/lib/db'
 import { Separator } from '@/components/ui/separator'
@@ -21,10 +21,10 @@ type Props = {
 
 const page = async ({ params }: Props) => {
   //CHALLENGE : Create the add on  products
-  const addOns = await stripe.products.list({
-    ids: addOnProducts.map((product) => product.id),
-    expand: ['data.default_price'],
-  })
+  // const addOns = await stripe.products.list({
+  //   ids: addOnProducts.map((product) => product.id),
+  //   expand: ['data.default_price'],
+  // })
 
   const agencySubscription = await db.agency.findUnique({
     where: {
@@ -36,36 +36,37 @@ const page = async ({ params }: Props) => {
     },
   })
 
-  const prices = await stripe.prices.list({
-    product: process.env.NEXT_TOPRISE_PRODUCT_ID,
-    active: true,
-  })
+  // todo: get the prices
+  // const prices = await stripe.prices.list({
+  //   product: process.env.NEXT_TOPRISE_PRODUCT_ID,
+  //   active: true,
+  // })
 
   const currentPlanDetails = pricingCards.find(
     (c) => c.priceId === agencySubscription?.Subscription?.priceId
   )
 
-  const charges = await stripe.charges.list({
-    limit: 50,
-    customer: agencySubscription?.customerId,
-  })
+  // const charges = await stripe.charges.list({
+  //   limit: 50,
+  //   customer: agencySubscription?.customerId,
+  // })
 
-  const allCharges = [
-    ...charges.data.map((charge) => ({
-      description: charge.description,
-      id: charge.id,
-      date: `${new Date(charge.created * 1000).toLocaleTimeString()} ${new Date(
-        charge.created * 1000
-      ).toLocaleDateString()}`,
-      status: 'Paid',
-      amount: `$${charge.amount / 100}`,
-    })),
-  ]
+  // const allCharges = [
+  //   ...charges.data.map((charge) => ({
+  //     description: charge.description,
+  //     id: charge.id,
+  //     date: `${new Date(charge.created * 1000).toLocaleTimeString()} ${new Date(
+  //       charge.created * 1000
+  //     ).toLocaleDateString()}`,
+  //     status: 'Paid',
+  //     amount: `$${charge.amount / 100}`,
+  //   })),
+  // ]
 
   return (
     <>
       <SubscriptionHelper
-        prices={prices.data}
+        prices={'prices.data'}
         customerId={agencySubscription?.customerId || ''}
         planExists={agencySubscription?.Subscription?.active === true}
       />
@@ -75,7 +76,7 @@ const page = async ({ params }: Props) => {
       <div className="flex flex-col lg:!flex-row justify-between gap-8">
         <PricingCard
           planExists={agencySubscription?.Subscription?.active === true}
-          prices={prices.data}
+          prices={'prices.data'}
           customerId={agencySubscription?.customerId || ''}
           amt={
             agencySubscription?.Subscription?.active === true
@@ -100,9 +101,9 @@ const page = async ({ params }: Props) => {
             agencySubscription?.Subscription?.active === true
               ? currentPlanDetails?.features || []
               : currentPlanDetails?.features ||
-                pricingCards.find((pricing) => pricing.title === 'Starter')
-                  ?.features ||
-                []
+              pricingCards.find((pricing) => pricing.title === 'Starter')
+                ?.features ||
+              []
           }
           title={
             agencySubscription?.Subscription?.active === true
@@ -110,7 +111,21 @@ const page = async ({ params }: Props) => {
               : 'Starter'
           }
         />
-        {addOns.data.map((addOn) => (
+        <PricingCard
+            planExists={agencySubscription?.Subscription?.active === true}
+            prices={'prices.data'}
+            customerId={agencySubscription?.customerId || ''}
+            key={'addOn.id'}
+            amt={'$0'}
+            buttonCta="Subscribe"
+            description="Dedicated support line & teams channel for support"
+            duration="/ month"
+            features={[]}
+            title={'24/7 priority support'}
+            highlightTitle="Get support now!"
+            highlightDescription="Get priority support and skip the long long with the click of a button."
+          />
+        {/* {addOns.data.map((addOn) => (
           <PricingCard
             planExists={agencySubscription?.Subscription?.active === true}
             prices={prices.data}
@@ -120,7 +135,7 @@ const page = async ({ params }: Props) => {
               //@ts-ignore
               addOn.default_price?.unit_amount
                 ? //@ts-ignore
-                  `$${addOn.default_price.unit_amount / 100}`
+                `$${addOn.default_price.unit_amount / 100}`
                 : '$0'
             }
             buttonCta="Subscribe"
@@ -131,7 +146,7 @@ const page = async ({ params }: Props) => {
             highlightTitle="Get support now!"
             highlightDescription="Get priority support and skip the long long with the click of a button."
           />
-        ))}
+        ))} */}
       </div>
       <h2 className="text-2xl p-4">Payment History</h2>
       <Table className="bg-card border-[1px] border-border rounded-md">
@@ -145,7 +160,26 @@ const page = async ({ params }: Props) => {
           </TableRow>
         </TableHeader>
         <TableBody className="font-medium truncate">
-          {allCharges.map((charge) => (
+          <TableRow key={'charge.id'}>
+              <TableCell>{'desc_goes_here'}</TableCell>
+              <TableCell className="text-muted-foreground">
+                {'id_goes_here'}
+              </TableCell>
+              <TableCell>{'date_goes_here'}</TableCell>
+              <TableCell>
+                <p
+                  className={clsx('', {
+                    'text-emerald-500': 'paid',
+                    'text-orange-600':'pending',
+                    'text-red-600': 'failed',
+                  })}
+                >
+                  {'charge.status.toUpperCase()_goes_here'}
+                </p>
+              </TableCell>
+            <TableCell className="text-right">{'charge.amount'}</TableCell>
+          </TableRow>
+          {/* {allCharges.map((charge) => (
             <TableRow key={charge.id}>
               <TableCell>{charge.description}</TableCell>
               <TableCell className="text-muted-foreground">
@@ -166,7 +200,7 @@ const page = async ({ params }: Props) => {
               </TableCell>
               <TableCell className="text-right">{charge.amount}</TableCell>
             </TableRow>
-          ))}
+          ))} */}
         </TableBody>
       </Table>
     </>

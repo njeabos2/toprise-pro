@@ -10,7 +10,7 @@ import {
 import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
 import { db } from '@/lib/db'
-import { stripe } from '@/lib/stripe'
+// import { stripe } from '@/lib/stripe'
 import { AreaChart } from '@tremor/react'
 import {
   ClipboardIcon,
@@ -54,46 +54,47 @@ const Page = async ({
   })
 
   if (agencyDetails.connectAccountId) {
-    const response = await stripe.accounts.retrieve({
-      stripeAccount: agencyDetails.connectAccountId,
-    })
+    console.log('agency ', agencyDetails);
+    // const response = await stripe.accounts.retrieve({
+    //   stripeAccount: agencyDetails.connectAccountId,
+    // })
 
-    currency = response.default_currency?.toUpperCase() || 'USD'
-    const checkoutSessions = await stripe.checkout.sessions.list(
-      {
-        created: { gte: startDate, lte: endDate },
-        limit: 100,
-      },
-      { stripeAccount: agencyDetails.connectAccountId }
-    )
-    sessions = checkoutSessions.data
-    totalClosedSessions = checkoutSessions.data
-      .filter((session) => session.status === 'complete')
-      .map((session) => ({
-        ...session,
-        created: new Date(session.created).toLocaleDateString(),
-        amount_total: session.amount_total ? session.amount_total / 100 : 0,
-      }))
+    // currency = response.default_currency?.toUpperCase() || 'USD'
+    // const checkoutSessions = await stripe.checkout.sessions.list(
+    //   {
+    //     created: { gte: startDate, lte: endDate },
+    //     limit: 100,
+    //   },
+    //   { stripeAccount: agencyDetails.connectAccountId }
+    // )
+    // sessions = checkoutSessions.data
+    // totalClosedSessions = checkoutSessions.data
+    //   .filter((session) => session.status === 'complete')
+    //   .map((session) => ({
+    //     ...session,
+    //     created: new Date(session.created).toLocaleDateString(),
+    //     amount_total: session.amount_total ? session.amount_total / 100 : 0,
+    //   }))
 
-    totalPendingSessions = checkoutSessions.data
-      .filter((session) => session.status === 'open')
-      .map((session) => ({
-        ...session,
-        created: new Date(session.created).toLocaleDateString(),
-        amount_total: session.amount_total ? session.amount_total / 100 : 0,
-      }))
-    net = +totalClosedSessions
-      .reduce((total, session) => total + (session.amount_total || 0), 0)
-      .toFixed(2)
+    // totalPendingSessions = checkoutSessions.data
+    //   .filter((session) => session.status === 'open')
+    //   .map((session) => ({
+    //     ...session,
+    //     created: new Date(session.created).toLocaleDateString(),
+    //     amount_total: session.amount_total ? session.amount_total / 100 : 0,
+    //   }))
+    // net = +totalClosedSessions
+    //   .reduce((total, session) => total + (session.amount_total || 0), 0)
+    //   .toFixed(2)
 
-    potentialIncome = +totalPendingSessions
-      .reduce((total, session) => total + (session.amount_total || 0), 0)
-      .toFixed(2)
+    // potentialIncome = +totalPendingSessions
+    //   .reduce((total, session) => total + (session.amount_total || 0), 0)
+    //   .toFixed(2)
 
-    closingRate = +(
-      (totalClosedSessions.length / checkoutSessions.data.length) *
-      100
-    ).toFixed(2)
+    // closingRate = +(
+    //   (totalClosedSessions.length / checkoutSessions.data.length) *
+    //   100
+    // ).toFixed(2)
   }
 
   return (
@@ -223,7 +224,7 @@ const Page = async ({
                         Abandoned
                         <div className="flex gap-2">
                           <ShoppingCart className="text-rose-700" />
-                          {sessions.length}
+                          {'sessions.length'}
                         </div>
                       </div>
                     )}
@@ -232,7 +233,7 @@ const Page = async ({
                         Won Carts
                         <div className="flex gap-2">
                           <ShoppingCart className="text-emerald-700" />
-                          {totalClosedSessions.length}
+                          {'totalClosedSessions.length'}
                         </div>
                       </div>
                     )}

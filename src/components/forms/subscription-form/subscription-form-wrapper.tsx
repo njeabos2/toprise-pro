@@ -1,17 +1,14 @@
 'use client'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
+import { useModal } from '@/providers/modal-provider'
+import Loading from '@/components/global/loading'
 import { toast } from '@/components/ui/use-toast'
 import { pricingCards } from '@/lib/constants'
-import { useModal } from '@/providers/modal-provider'
-import { Plan } from '@prisma/client'
-import { StripeElementsOptions } from '@stripe/stripe-js'
-import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useMemo, useState } from 'react'
-import { Elements } from '@stripe/react-stripe-js'
-import { getStripe } from '@/lib/stripe/stripe-client'
-import Loading from '@/components/global/loading'
+import { Plan } from '@prisma/client'
 import SubscriptionForm from '.'
+import clsx from 'clsx'
 
 type Props = {
   customerId: string
@@ -29,7 +26,16 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
     clientSecret: string
   }>({ subscriptionId: '', clientSecret: '' })
 
-  const options: StripeElementsOptions = useMemo(
+  // const options: PaypalElementsOptions = useMemo(
+  //   () => ({
+  //     clientSecret: subscription?.clientSecret,
+  //     appearance: {
+  //       theme: 'flat',
+  //     },
+  //   }),
+  //   [subscription]
+  // )
+  const options: any = useMemo(
     () => ({
       clientSecret: subscription?.clientSecret,
       appearance: {
@@ -75,7 +81,7 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
   return (
     <div className="border-none transition-all">
       <div className="flex flex-col gap-4">
-        {data.plans?.plans.map((price) => (
+        {data.plans?.plans.map((price: { id: string; unit_amount: number | null; nickname: string }) => (
           <Card
             onClick={() => setSelectedPriceId(price.id as Plan)}
             key={price.id}
@@ -106,12 +112,8 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
         {options.clientSecret && !planExists && (
           <>
             <h1 className="text-xl">Payment Method</h1>
-            <Elements
-              stripe={getStripe()}
-              options={options}
-            >
-              <SubscriptionForm selectedPriceId={selectedPriceId} />
-            </Elements>
+            <h1>Payment Method goes here</h1>
+            <SubscriptionForm selectedPriceId={selectedPriceId} />
           </>
         )}
 
