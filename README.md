@@ -2,7 +2,7 @@
 
 Multi-tenant full stack website with Project Management and Dashboards.
 
-![homepage_dev_screenshot](https://github.com/user-attachments/assets/c8de41d6-d982-49a8-b2ce-b859917b721a)
+![toprise-home](https://github.com/user-attachments/assets/b1916f9a-f1f8-47ef-8fea-77833432a7aa)
 
 ## Features
 
